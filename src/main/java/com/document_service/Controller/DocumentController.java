@@ -26,7 +26,7 @@ public class DocumentController {
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<Document> uploadDocument(@RequestParam("file") MultipartFile file, @RequestParam("userId") Long userId) {
+    public ResponseEntity<Document> uploadDocument(@RequestParam("file") MultipartFile file) {
         try {
             // Extract text using OCR
             String extractedText = ocrService.extractText(file);
@@ -39,8 +39,7 @@ public class DocumentController {
             document.setUploadDate(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME));
 
 
-            // Save the document to the database
-            documentRepository.save(document);
+
 
             return ResponseEntity.ok(document);
         } catch (IOException | TesseractException e) {
